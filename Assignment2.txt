@@ -80,7 +80,8 @@ pc = sim.pearson()
 print ("Pearson Correlation =",round(pc,2))
 print ()
 
-print ("--" *20)
+print ("--" *30)
+
 
 
 
