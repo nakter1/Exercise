@@ -1,0 +1,96 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Thu Mar 23 04:15:36 2017
+
+@author: Administrator
+"""
+
+import math
+
+class similarity:
+    def __init__ (self, ratingX, ratingY):
+        self.rating1 = ratingX
+        self.rating2 = ratingY
+        
+    def minkowski(self, r):
+        
+        if(r <= 0):
+            print (">>> minkowski debug: r<=0; returning -2 distance!")
+            return -2
+            
+        distance = 0
+        for x, y in zip(self.rating1, self.rating2):
+            distance = distance + pow(abs(x - y), r)
+            
+        return pow(distance,1/r)
+        
+    def pearson(self):
+        
+        sum_xy = 0
+        sum_x = 0
+        sum_y = 0
+        sum_x2 = 0
+        sum_y2 = 0
+        n = 0
+        
+        if len(self.rating1) != len(self.rating2):
+            print (">>> pearson debug: unequal lengths; returning -2 correlation!")
+            return -2
+        elif len(self.rating1) == 0:
+            print (">>> pearson debug: 0 length; returning -2 correlation!")
+            return -2
+        else:
+            n = len(self.rating1)
+            
+        for x, y in zip(self.rating1, self.rating2):
+            sum_xy += x * y
+            sum_x += x
+            sum_y += y
+            sum_x2 += pow(x, 2)
+            sum_y2 += pow(y, 2)
+            
+        denominator = (math.sqrt(sum_x2 -pow(sum_x, 2) / n) * math.sqrt(sum_y2 - pow(sum_y, 2) / n))
+        if denominator == 0:
+            print (">>> pearson debug: 0 denominator; returning -2 correlation!")
+            return -2
+        else:
+            return (sum_xy - (sum_x * sum_y) / n) / denominator
+print ()
+print ("--" *20)           
+UserPRatings = [10, 5, 7, 9, 3, 1]
+UserQRatings= [5, 10, 4, 1, 3, 6]
+
+print ("UserPRatings =", UserPRatings)
+print ("UserQRatings =", UserQRatings)
+print ()
+print ("--" *20)
+
+sim = similarity(UserPRatings, UserQRatings)
+
+md = sim.minkowski(1)
+print ("Manhattan Distance=",round(md,2))
+
+md = sim.minkowski(2)
+print ("Euclidean Distance=",round(md,2))
+
+md = sim.minkowski(3)
+print ("Minkowski Distance=",round(md,2))
+
+pc = sim.pearson()
+print ("Pearson Correlation =",round(pc,2))
+print ()
+
+print ("--" *20)
+
+
+
+
+
+
+
+
+
+
+        
+
+            
